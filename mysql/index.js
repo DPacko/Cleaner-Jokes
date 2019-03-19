@@ -50,6 +50,14 @@ const addNewFavorite = (id) => {
     });
 };
 
+const updateJokeOfDay = (joke) => {
+  return knex('JokeOfToday')
+    .insert(joke)
+    .then(() => {
+      return;
+    });
+};
+
 const deleteFavorite = (notFave) => {
   return knex('Jokes')
     .where('id', notFave)
@@ -78,6 +86,7 @@ module.exports = {
   grabTodaysJoke,
   grabFavorites,
   addNewFavorite,
+  updateJokeOfDay,
   deleteFavorite,
   deleteTodaysJoke,
 };

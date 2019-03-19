@@ -15,6 +15,7 @@ import JokeOfDay from './components/JokeOfDay.jsx';
 import FavoritedJokes from './components/FavoritedJokes.jsx';
 import ComputerJokes from './components/ComputerJokes.jsx';
 import PunJokes from './components/PunJokes.jsx';
+import DadJokes from './components/DadJokes.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -22,12 +23,8 @@ class App extends React.Component {
     this.state = {
       ProgrammerJokes: [''],
       PunnyJokes: [''],
-      jokeOfDay: [
-        {
-          setup: 'What do you call a bear with no teeth?',
-          punchline: 'A gummy bear.',
-        },
-      ],
+      dadJokes: [''],
+      jokeOfDay: {},
       favoritedJokes: [''],
     };
 
@@ -70,6 +67,17 @@ class App extends React.Component {
     });
 
     ///////////////////
+    /// Dad Jokes /////
+    ///////////////////
+    let id = Math.floor(Math.random() * Math.floor(5));
+    let gp = [127, 137, 147, 157, 167, 175];
+    axios.get(`/jokes/?id=${gp[id]}`).then((response) => {
+      this.setState({
+        dadJokes: response.data,
+      });
+    });
+
+    ///////////////////
     // Today's Joke ///
     ///////////////////
     axios.get('/savedJoke').then((response) => {
@@ -87,15 +95,22 @@ class App extends React.Component {
     } else if (category === 'puns') {
       idx = Math.floor(Math.random() * Math.floor(5));
       list = [64, 74, 84, 94, 104, 113];
+    } else if (category === 'dad') {
+      idx = Math.floor(Math.random() * Math.floor(5));
+      list = [127, 137, 147, 157, 167, 175];
     }
     axios.get(`/more-jokes?id=${list[idx]}`).then((res) => {
       if (list[0] < 60) {
         this.setState({
           ProgrammerJokes: res.data,
         });
-      } else {
+      } else if (list[0] < 125) {
         this.setState({
           PunnyJokes: res.data,
+        });
+      } else {
+        this.setState({
+          dadJokes: res.data,
         });
       }
     });
@@ -120,6 +135,7 @@ class App extends React.Component {
     const category = joke.category;
     const programJokes = [...this.state.ProgrammerJokes];
     const punnyJokes = [...this.state.PunnyJokes];
+    const daddioJokes = [...this.state.dadJokes];
     switch (category) {
       case 'Computer':
         // update that joke in state
@@ -138,9 +154,18 @@ class App extends React.Component {
           }
         });
         break;
+
+      case 'dad':
+        // update that joke in state
+        const changeDad = daddioJokes.forEach((item) => {
+          if (item.id === joke.id) {
+            item.favorited = 'true';
+          }
+        });
+        break;
     }
 
-    this.updateFavorites(joke, programJokes, punnyJokes);
+    this.updateFavorites(joke, programJokes, punnyJokes, daddioJokes);
   }
 
   unsetFavorite(joke) {
@@ -158,6 +183,7 @@ class App extends React.Component {
     const category = joke.category;
     const programJokes = [...this.state.ProgrammerJokes];
     const punnyJokes = [...this.state.PunnyJokes];
+    const daddioJokes = [...this.state.dadJokes];
     switch (category) {
       case 'Computer':
         // update that joke in state
@@ -176,46 +202,63 @@ class App extends React.Component {
           }
         });
         break;
+
+      case 'dad':
+        // update that joke in state
+        const changeDad = daddioJokes.forEach((item) => {
+          if (item.id === joke.id) {
+            item.favorited = 'false';
+          }
+        });
+        break;
     }
 
     this.setState({
       favoritedJokes: arr,
       ProgrammerJokes: programJokes,
       PunnyJokes: punnyJokes,
+      dadJokes: daddioJokes,
     });
-
-    // this.updateFavorites(arr, programJokes, punnyJokes);
   }
 
-  updateFavorites(favorite, programmer, pun) {
+  updateFavorites(favorite, programmer, pun, dad) {
     let joined = this.state.favoritedJokes.concat(favorite);
     this.setState({
       favoritedJokes: joined,
       ProgrammerJokes: programmer,
       PunnyJokes: pun,
+      dadJokes: dad,
     });
   }
 
   grabAJoke() {
     let idx = Math.floor(Math.random() * Math.floor(123));
-    axios.get(`/jokeOfToday/?id=${idx}`).then((response) => {
-      // console.log(response.data);
-      this.setState({
-        jokeOfDay: response.data,
+    axios
+      .get(`/jokeOfToday/?id=${idx}`)
+      .then((response) => {
+        this.setState({
+          jokeOfDay: response.data[0],
+        });
+      })
+      .then(() => {
+        axios.delete('/delete-jokeOfDay').then(() => {
+          axios({
+            method: 'post',
+            url: '/new-jokeOfDay',
+            params: this.state.jokeOfDay,
+          });
+        });
       });
-    });
-
-    // axios.delete('/delete-jokeOfDay');
-
-    // axios({
-    //   method: 'post',
-    //   url: '/new-jokeOfDay',
-    //   params: joke,
-    // });
   }
 
   render() {
-    let { jokeOfDay, favoritedJokes, ProgrammerJokes, PunnyJokes } = this.state;
+    let {
+      jokeOfDay,
+      favoritedJokes,
+      ProgrammerJokes,
+      PunnyJokes,
+      dadJokes,
+    } = this.state;
     return (
       <div>
         <Container>
@@ -241,6 +284,12 @@ class App extends React.Component {
               />
               <PunJokes
                 jokes={PunnyJokes}
+                handleFavorite={this.setFavorite}
+                handleNotFavorite={this.unsetFavorite}
+                moreJokes={this.getMoreJokes}
+              />
+              <DadJokes
+                jokes={dadJokes}
                 handleFavorite={this.setFavorite}
                 handleNotFavorite={this.unsetFavorite}
                 moreJokes={this.getMoreJokes}

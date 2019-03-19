@@ -7,6 +7,7 @@ var {
   grabTodaysJoke,
   grabFavorites,
   addNewFavorite,
+  updateJokeOfDay,
   deleteFavorite,
   deleteTodaysJoke,
 } = require('../mysql');
@@ -83,6 +84,17 @@ app.put('/remove-favorite', (req, res) => {
   let id = req.query.id;
   // console.log('id', id);
   deleteFavorite(id)
+    .then(() => {
+      res.status(200).end();
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
+app.post('/new-jokeOfDay', (req, res) => {
+  const joke = req.query;
+  updateJokeOfDay(joke)
     .then(() => {
       res.status(200).end();
     })
