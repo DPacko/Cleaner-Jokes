@@ -1,0 +1,121 @@
+#body-color {
+  background-color: rgba(120, 224, 247, 0.84);
+}
+
+.subject-title {
+  text-align: center;
+}
+
+.left-side {
+  border: 5px solid #ac5b5b;
+  border-radius: 25px;
+  position: fixed;
+  top: 0;
+  margin-top: 63px;
+  padding: 20px;
+  max-width: 300px;
+}
+
+// @media only screen and (max-width: 1000px) {
+//   .left-side {
+//     max-width: 250px;
+//   }
+// }
+
+// @media only screen and (max-width: 901px) {
+//   .fav-joke {
+//     min-width: 180px;
+//   }
+// }
+
+.favorite-title {
+  margin-top: 50px;
+}
+
+.fav-joke {
+  min-width: 280px;
+}
+
+.jokes {
+  margin-bottom: 20px;
+  min-width: 250px;
+}
+
+// style the 'more jokes' btns
+.read-btn {
+  border-radius: 10%;
+  box-shadow: 1px 2px 11px black;
+  color: rgb(71, 204, 237);
+  margin-bottom: 15px;
+}
+
+.read-btn:hover {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.read-btn:focus {
+  cursor: pointer;
+  outline: 0;
+}
+
+/// favorites btn list
+.fav-btn {
+  font-size: 13px;
+  text-decoration: underline;
+  background-color: transparent;
+  border: 0px;
+  transition: transform 500ms ease-in;
+}
+
+.fav-btn:hover {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.fav-btn:focus {
+  cursor: pointer;
+  outline: 0;
+}
+
+.hide-btn {
+  font-size: 13px;
+  text-decoration: underline;
+  background-color: transparent;
+  border: 0px;
+  transition: transform 500ms ease-in;
+}
+
+.hide-btn:focus {
+  cursor: pointer;
+  outline: 0;
+}
+
+.hide-btn:hover {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+@keyframes wiggle {
+  20% {
+    transform: translateX(4px);
+  }
+  40% {
+    transform: translateX(-4px);
+  }
+  60% {
+    transform: translateX(2px);
+  }
+  80% {
+    transform: translateX(-1px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.wiggle:hover {
+  cursor: pointer;
+  animation: wiggle 1s ease;
+  animation-iteration-count: 1;
+}
