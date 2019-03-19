@@ -25,7 +25,7 @@ class FavoredJoke extends React.Component {
   render() {
     let { joke } = this.props;
     return (
-      <Row className='jokes '>
+      <Row className='jokes joke-font'>
         <Col lg='8' className='fav-joke'>
           <div>{joke.setup}</div>
           <div>{joke.punchline}</div>

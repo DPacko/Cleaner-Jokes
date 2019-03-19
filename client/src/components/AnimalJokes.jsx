@@ -1,7 +1,7 @@
 import React from 'react';
-import ComputerJoke from './ComputerJoke.jsx';
+import AnimalJoke from './AnimalJoke.jsx';
 
-class ComputerJokes extends React.Component {
+class AnimalJokes extends React.Component {
   constructor(props) {
     super(props);
 
@@ -12,7 +12,7 @@ class ComputerJokes extends React.Component {
   }
 
   generateJokes() {
-    this.props.moreJokes('Computer');
+    this.props.moreJokes('animal');
   }
 
   showJokes() {
@@ -25,7 +25,7 @@ class ComputerJokes extends React.Component {
     let { jokes, handleNotFavorite, handleFavorite } = this.props;
     return (
       <div>
-        <h3 className='title'>Programmer Jokes</h3>
+        <h3 className='title'>Animal Jokes</h3>
         {this.state.showJokes && (
           <button onClick={this.generateJokes} className='read-btn title'>
             more jokes
@@ -34,11 +34,11 @@ class ComputerJokes extends React.Component {
         {'\n'}
         {this.state.showJokes === false && (
           <button onClick={this.showJokes} className='read-btn title'>
-            more programmer jokes
+            more animal jokes
           </button>
         )}
         {this.state.showJokes === false && (
-          <ComputerJoke
+          <AnimalJoke
             key={1}
             joke={jokes[0]}
             handleNotFavorite={handleNotFavorite}
@@ -47,7 +47,7 @@ class ComputerJokes extends React.Component {
         )}
         {this.state.showJokes
           ? jokes.map((joke, idx) => (
-              <ComputerJoke
+              <AnimalJoke
                 key={idx}
                 joke={joke}
                 handleNotFavorite={handleNotFavorite}
@@ -65,4 +65,4 @@ class ComputerJokes extends React.Component {
   }
 }
 
-export default ComputerJokes;
+export default AnimalJokes;

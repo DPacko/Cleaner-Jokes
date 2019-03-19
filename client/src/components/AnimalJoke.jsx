@@ -3,7 +3,7 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-class DadJoke extends React.Component {
+class AnimalJoke extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -45,4 +45,4 @@ class DadJoke extends React.Component {
   }
 }
 
-export default DadJoke;
+export default AnimalJoke;

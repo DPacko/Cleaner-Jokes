@@ -12,7 +12,7 @@ class FavoritedJokes extends React.Component {
     return (
       <div>
         {favoritedJokes.length !== 0 && (
-          <h2 className='favorite-title'>Favorites:</h2>
+          <h2 className='favorite-title title'>Favorites:</h2>
         )}
 
         {favoritedJokes.map((joke, index) => (

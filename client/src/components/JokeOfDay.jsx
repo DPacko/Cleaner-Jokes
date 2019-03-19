@@ -15,14 +15,15 @@ class JokeOfDay extends React.Component {
   render() {
     let { jokeOfDay } = this.props;
     return (
-      <div className='jokeofday'>
+      <div className='jokeofday joke-font'>
         <div className='wiggle'>
-          <h2 className='joke-today' onClick={this.grabRandom}>
+          <h2 className='joke-today title' onClick={this.grabRandom}>
             Joke of the Day!
           </h2>
         </div>
         <div>{jokeOfDay.setup}</div>
-        <div>{jokeOfDay.punchline}</div>
+        <div className='reveal'>Reveal...</div>
+        <div className='guess-joke'>{jokeOfDay.punchline}</div>
       </div>
     );
   }

@@ -30,10 +30,10 @@ class ComputerJoke extends React.Component {
     let isFavorited = this.props.joke.favorited !== 'false';
 
     return (
-      <Row className='jokes'>
+      <Row className='jokes joke-font'>
         <Col lg='9'>
           <div>{this.props.joke.setup}</div>
-          <div>{this.props.joke.punchline}</div>
+          <div className='underline-joke'>{this.props.joke.punchline}</div>
         </Col>
 
         <Col lg='3'>

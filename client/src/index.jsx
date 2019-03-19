@@ -16,6 +16,7 @@ import FavoritedJokes from './components/FavoritedJokes.jsx';
 import ComputerJokes from './components/ComputerJokes.jsx';
 import PunJokes from './components/PunJokes.jsx';
 import DadJokes from './components/DadJokes.jsx';
+import AnimalJokes from './components/AnimalJokes.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class App extends React.Component {
       ProgrammerJokes: [''],
       PunnyJokes: [''],
       dadJokes: [''],
+      animalJokes: [''],
       jokeOfDay: {},
       favoritedJokes: [''],
     };
@@ -78,6 +80,17 @@ class App extends React.Component {
     });
 
     ///////////////////
+    // Animal Jokes ///
+    ///////////////////
+    let aidx = Math.floor(Math.random() * Math.floor(5));
+    let g = [190, 199, 211, 220, 230, 240];
+    axios.get(`/jokes/?id=${g[aidx]}`).then((response) => {
+      this.setState({
+        animalJokes: response.data,
+      });
+    });
+
+    ///////////////////
     // Today's Joke ///
     ///////////////////
     axios.get('/savedJoke').then((response) => {
@@ -98,6 +111,9 @@ class App extends React.Component {
     } else if (category === 'dad') {
       idx = Math.floor(Math.random() * Math.floor(5));
       list = [127, 137, 147, 157, 167, 175];
+    } else if (category === 'animal') {
+      idx = Math.floor(Math.random() * Math.floor(5));
+      list = [190, 200, 210, 220, 230, 240];
     }
     axios.get(`/more-jokes?id=${list[idx]}`).then((res) => {
       if (list[0] < 60) {
@@ -108,9 +124,13 @@ class App extends React.Component {
         this.setState({
           PunnyJokes: res.data,
         });
-      } else {
+      } else if (list[0] < 190) {
         this.setState({
           dadJokes: res.data,
+        });
+      } else {
+        this.setState({
+          animalJokes: res.data,
         });
       }
     });
@@ -136,6 +156,7 @@ class App extends React.Component {
     const programJokes = [...this.state.ProgrammerJokes];
     const punnyJokes = [...this.state.PunnyJokes];
     const daddioJokes = [...this.state.dadJokes];
+    const animals = [...this.state.animalJokes];
     switch (category) {
       case 'Computer':
         // update that joke in state
@@ -163,9 +184,18 @@ class App extends React.Component {
           }
         });
         break;
+
+      case 'animal':
+        // update that joke in state
+        const changeAnimal = animals.forEach((item) => {
+          if (item.id === joke.id) {
+            item.favorited = 'true';
+          }
+        });
+        break;
     }
 
-    this.updateFavorites(joke, programJokes, punnyJokes, daddioJokes);
+    this.updateFavorites(joke, programJokes, punnyJokes, daddioJokes, animals);
   }
 
   unsetFavorite(joke) {
@@ -184,6 +214,7 @@ class App extends React.Component {
     const programJokes = [...this.state.ProgrammerJokes];
     const punnyJokes = [...this.state.PunnyJokes];
     const daddioJokes = [...this.state.dadJokes];
+    const animals = [...this.state.animalJokes];
     switch (category) {
       case 'Computer':
         // update that joke in state
@@ -211,6 +242,15 @@ class App extends React.Component {
           }
         });
         break;
+
+      case 'animal':
+        // update that joke in state
+        const changeAnimal = animals.forEach((item) => {
+          if (item.id === joke.id) {
+            item.favorited = 'false';
+          }
+        });
+        break;
     }
 
     this.setState({
@@ -218,16 +258,18 @@ class App extends React.Component {
       ProgrammerJokes: programJokes,
       PunnyJokes: punnyJokes,
       dadJokes: daddioJokes,
+      animalJokes: animals,
     });
   }
 
-  updateFavorites(favorite, programmer, pun, dad) {
+  updateFavorites(favorite, programmer, pun, dad, animal) {
     let joined = this.state.favoritedJokes.concat(favorite);
     this.setState({
       favoritedJokes: joined,
       ProgrammerJokes: programmer,
       PunnyJokes: pun,
       dadJokes: dad,
+      animalJokes: animal,
     });
   }
 
@@ -258,13 +300,11 @@ class App extends React.Component {
       ProgrammerJokes,
       PunnyJokes,
       dadJokes,
+      animalJokes,
     } = this.state;
     return (
       <div>
         <Container>
-          <h1 className='subject-title'>
-            JOKES inspired from HRR Presentations!
-          </h1>
           <Row>
             <Col sm lg='4'>
               <div className='left-side '>
@@ -290,6 +330,12 @@ class App extends React.Component {
               />
               <DadJokes
                 jokes={dadJokes}
+                handleFavorite={this.setFavorite}
+                handleNotFavorite={this.unsetFavorite}
+                moreJokes={this.getMoreJokes}
+              />
+              <AnimalJokes
+                jokes={animalJokes}
                 handleFavorite={this.setFavorite}
                 handleNotFavorite={this.unsetFavorite}
                 moreJokes={this.getMoreJokes}

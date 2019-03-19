@@ -25,15 +25,15 @@ class PunJokes extends React.Component {
     let { jokes, handleNotFavorite, handleFavorite } = this.props;
     return (
       <div>
-        <h3>Punny Jokes</h3>
+        <h3 className='title'>Punny Jokes</h3>
         {this.state.showJokes && (
-          <button onClick={this.generateJokes} className='read-btn'>
+          <button onClick={this.generateJokes} className='read-btn title'>
             more jokes
           </button>
         )}
         {'\n'}
         {this.state.showJokes === false && (
-          <button onClick={this.showJokes} className='read-btn'>
+          <button onClick={this.showJokes} className='read-btn title'>
             more punny jokes
           </button>
         )}
