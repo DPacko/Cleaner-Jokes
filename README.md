@@ -5,6 +5,7 @@ single-page app for finding and favoriting jokes in PG rated categories :)
 #### created in a 2-day sprint
 
 ## Deployed on Heroku
+https://cleaner-jokes.herokuapp.com/
 
 ![](/image/2019-03-23-17-18-27.png)
 
