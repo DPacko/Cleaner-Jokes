@@ -16,20 +16,8 @@
   max-width: 300px;
 }
 
-// @media only screen and (max-width: 1000px) {
-//   .left-side {
-//     max-width: 250px;
-//   }
-// }
-
-// @media only screen and (max-width: 901px) {
-//   .fav-joke {
-//     min-width: 180px;
-//   }
-// }
-
 .favorite-title {
-  margin-top: 35px;
+  margin-top: 20px;
 }
 
 .fav-joke {
@@ -125,8 +113,8 @@
 }
 
 .jokeofday {
-  // font-family: 'Indie Flower', cursive;
   font-size: 20px;
+  min-width: 260px;
 }
 
 .joke-font {
@@ -143,9 +131,14 @@
 }
 
 .reveal {
+  cursor: default;
   font-size: 15px;
 }
 
 .reveal:hover + .guess-joke {
   color: black;
+}
+
+.space-above {
+  margin-top: 65px;
 }

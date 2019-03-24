@@ -24,7 +24,7 @@ class ComputerJokes extends React.Component {
   render() {
     let { jokes, handleNotFavorite, handleFavorite } = this.props;
     return (
-      <div>
+      <div className='space-above'>
         <h3 className='title'>Programmer Jokes</h3>
         {this.state.showJokes && (
           <button onClick={this.generateJokes} className='read-btn title'>
